@@ -1,0 +1,36 @@
+# OS / IDE
+.DS_Store
+.vscode/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local secrets and machine-specific config
+config.yaml
+.env
+
+# Data and generated outputs
+datasets/
+raw_data/
+outputs/
+paper_plot/
+*.csv
+*.jsonl
+*.xlsx
+*.parquet
+*.pkl
+*.npy
+*.zip
+
+# Figures and rendered artifacts
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+
+# Logs
+*.log

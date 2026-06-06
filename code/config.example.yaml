@@ -1,0 +1,74 @@
+task: entity_matching
+provider: openai
+model: gpt-4.1-mini
+
+api_key:
+  openai: ""
+  gemini: ""
+
+prompts_dir: prompts
+
+entity_matching:
+  tableA_csv: ./datasets/entity_matching/iTunes-Amazon/tableA.csv
+  tableB_csv: ./datasets/entity_matching/iTunes-Amazon/tableB.csv
+  train_csv: ./datasets/entity_matching/iTunes-Amazon/train.csv
+  valid_csv: ./datasets/entity_matching/iTunes-Amazon/valid.csv
+  test_csv: ./datasets/entity_matching/iTunes-Amazon/test.csv
+  test_label_csv: ./datasets/entity_matching/iTunes-Amazon/test_label.csv
+  id_col: id
+
+data_imputation:
+  csv: ./datasets/data_imputation/Fodors-Zagats/tableA.csv
+  id_col: id
+  target_cols: city,type
+
+examples:
+  csv: ./datasets/entity_matching/iTunes-Amazon/train.csv
+  n: 5
+  manual: []
+
+batch_size: 10
+temperature: 0
+max_tokens: 800
+
+openai_base_url: https://api.openai.com/v1
+
+gemini_models:
+  fast: gemini-2.5-flash
+  pro: gemini-2.5-pro
+
+gemini:
+  max_retries: 1
+  base_retry_seconds: 1.0
+  max_retry_seconds: 5.0
+
+out_dir: outputs
+
+billing:
+  total_budget_usd: 100.0
+  pricing_per_million:
+    gpt-5.2:
+      input_usd: 1.25
+      output_usd: 10.0
+    gpt-4o:
+      input_usd: 2.5
+      output_usd: 10.0
+    gpt-4.1-mini:
+      input_usd: 0.4
+      output_usd: 1.6
+
+em_sweep:
+  levels:
+    p: [0.25, 0.5, 0.75, 1.0]
+    r_len: [0.2, 0.4, 0.6, 0.8, 1.0]
+    k: [0, 1, 2, 3]
+    example_num: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  defaults:
+    p: 1.0
+    r_len: 1.0
+    k: 3
+    example_num: 0
+  key_attributes: [Song_Name, Artist_Name, Album_Name]
+  seeds: [42]
+  n_repeats: 1
+  positive_label: 1
